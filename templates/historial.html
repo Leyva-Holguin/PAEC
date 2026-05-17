@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block titulo %}Historial y Estadisticas de IMC{% endblock %}
+
+{% block contenido %}
+
+<section class="container pt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Historial y Estadisticas de IMC</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Visualizacion de todos los registros y estadisticas de la calculadora IMC</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-center border-primary">
+                <div class="card-body">
+                    <h5 class="text-primary">Total registros</h5>
+                    <h2 class="display-4">{{ total_registros }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center border-success">
+                <div class="card-body">
+                    <h5 class="text-success">IMC promedio</h5>
+                    <h2 class="display-4">{{ imc_promedio }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center border-info">
+                <div class="card-body">
+                    <h5 class="text-info">Peso minimo</h5>
+                    <h2 class="display-4">{{ peso_minimo }}</h2>
+                    <small>kg</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center border-danger">
+                <div class="card-body">
+                    <h5 class="text-danger">Peso maximo</h5>
+                    <h2 class="display-4">{{ peso_maximo }}</h2>
+                    <small>kg</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Distribucion por clasificacion</h5>
+                </div>
+                <div class="card-body">
+                    {% if distribucion %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Clasificacion</th>
+                                    <th>Cantidad</th>
+                                    <th>Porcentaje</th>
+                                    <th>Grafica</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in distribucion %}
+                                <tr>
+                                    <td>
+                                        {% if item.clasificacion == 'Bajo peso' %}
+                                            <span class="badge bg-warning text-dark">Bajo peso</span>
+                                        {% elif item.clasificacion == 'Peso normal' %}
+                                            <span class="badge bg-success">Peso normal</span>
+                                        {% elif item.clasificacion == 'Sobrepeso' %}
+                                            <span class="badge bg-warning text-dark">Sobrepeso</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Obesidad</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item.cantidad }}</strong></td>
+                                    <td>{{ item.porcentaje }}%</strong></td>
+                                    <td style="width: 50%;">
+                                        <div class="progress">
+                                            <div class="progress-bar 
+                                                {% if item.clasificacion == 'Bajo peso' %}bg-warning
+                                                {% elif item.clasificacion == 'Peso normal' %}bg-success
+                                                {% elif item.clasificacion == 'Sobrepeso' %}bg-warning
+                                                {% else %}bg-danger{% endif %}"
+                                                role="progressbar"
+                                                style="width: {{ item.porcentaje }}%"
+                                                aria-valuenow="{{ item.porcentaje }}"
+                                                aria-valuemin="0"
+                                                aria-valuemax="100">
+                                                {{ item.porcentaje }}%
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info text-center">
+                        No hay datos suficientes para mostrar estadisticas
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Todos los registros</h5>
+                </div>
+                <div class="card-body">
+                    {% if registros %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Edad</th>
+                                    <th>Peso</th>
+                                    <th>Altura</th>
+                                    <th>IMC</th>
+                                    <th>Clasificacion</th>
+                                    <th>Fecha</th>
+                                    <th>Accion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for r in registros %}
+                                <tr>
+                                    <td>{{ r.id }}</td>
+                                    <td>{{ r.nombre }}</strong></td>
+                                    <td>{{ r.edad or '-' }}</td>
+                                    <td>{{ r.peso }} kg</td>
+                                    <td>{{ r.altura }} m</td>
+                                    <td>{{ r.imc }}</strong></td>
+                                    <td>
+                                        {% if r.clasificacion == 'Bajo peso' %}
+                                            <span class="badge bg-warning text-dark">Bajo peso</span>
+                                        {% elif r.clasificacion == 'Peso normal' %}
+                                            <span class="badge bg-success">Peso normal</span>
+                                        {% elif r.clasificacion == 'Sobrepeso' %}
+                                            <span class="badge bg-warning text-dark">Sobrepeso</span>
+                                        {% elif r.clasificacion == 'Obesidad grado I' %}
+                                            <span class="badge bg-danger">Obesidad grado I</span>
+                                        {% elif r.clasificacion == 'Obesidad grado II' %}
+                                            <span class="badge bg-danger">Obesidad grado II</span>
+                                        {% elif r.clasificacion == 'Obesidad grado III' %}
+                                            <span class="badge bg-danger">Obesidad grado III</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">{{ r.clasificacion }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ r.fecha_registro.strftime('%d/%m/%Y %H:%M') }}</td>
+                                    <td>
+                                        <a href="{{ url_for('eliminar', id=r.id) }}" class="btn btn-sm btn-danger" 
+                                           onclick="return confirm('Eliminar este registro?')">
+                                            Eliminar
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info text-center">
+                        No hay registros disponibles
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
