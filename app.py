@@ -24,9 +24,10 @@ class RegistroIMC(db.Model):
     imc = db.Column(db.Float, nullable=False)
     clasificacion = db.Column(db.String(50))
     fecha_registro = db.Column(db.DateTime, default=datetime.utcnow)
+
 @app.route('/')
-def index():
-    return render_template('imc.html', datos_usuario=None, resultado_imc=None)
+def info():
+    return render_template('info.html')
 
 @app.route('/cal_imc', methods=['POST'])
 def cal_imc():
@@ -134,6 +135,18 @@ def eliminar(id):
 with app.app_context():
     db.create_all()
     print("Base de datos lista")
+
+@app.route('/historia')
+def conciencia(id):
+    return render_template('historia.html')
+
+@app.route('/quimica')
+def quimica(id):
+    return render_template('quimica.html')
+
+@app.route('/imc')
+def imc():
+    return render_template('imc.html', datos_usuario=None, resultado_imc=None)
 
 if __name__ == '__main__':
     print("Servidor en http://localhost:5000")
