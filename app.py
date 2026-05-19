@@ -48,6 +48,10 @@ def calcular_imc(peso, altura_cm):
 
 @app.route('/')
 def index():
+    return render_template('info.html')
+
+@app.route('/imc')
+def imc_page():
     return render_template('imc.html', datos_usuario=None, resultado_imc=None)
 
 @app.route('/cal_imc', methods=['POST'])
@@ -77,7 +81,7 @@ def cal_imc():
     except Exception as e:
         flash(f'Error: {str(e)}', 'danger')
     
-    return redirect(url_for('index'))
+    return redirect(url_for('imc_page'))
 
 @app.route('/historial')
 def historial():
@@ -126,6 +130,10 @@ def eliminar(id):
     db.session.commit()
     flash('Registro eliminado', 'success')
     return redirect(url_for('historial'))
+
+@app.route('/quimica')
+def quimica():
+    return render_template('quimica.html')
 
 with app.app_context():
     db.create_all()
