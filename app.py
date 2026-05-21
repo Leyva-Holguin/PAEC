@@ -31,8 +31,7 @@ class RegistroIMC(db.Model):
 
 def calcular_imc(peso, altura_cm):
     altura_m = altura_cm / 100
-    imc = peso / (altura_m ** 2)
-    
+    imc = peso / (altura_m ** 2)    
     if imc < 18.5:
         return round(imc, 2), "Bajo peso"
     elif imc < 25:
