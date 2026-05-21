@@ -50,6 +50,14 @@ def calcular_imc(peso, altura_cm):
 def index():
     return render_template('info.html')
 
+@app.route('/quimica')
+def quimica():
+    return render_template('quimica.html')
+
+@app.route('/conciencia')
+def conciencia():
+    return render_template('conciencia.html')
+
 @app.route('/imc')
 def imc_page():
     return render_template('imc.html', datos_usuario=None, resultado_imc=None)
@@ -130,10 +138,6 @@ def eliminar(id):
     db.session.commit()
     flash('Registro eliminado', 'success')
     return redirect(url_for('historial'))
-
-@app.route('/quimica')
-def quimica():
-    return render_template('quimica.html')
 
 with app.app_context():
     db.create_all()
