@@ -27,7 +27,7 @@
                         <div class="row mb-3">
                             <div class="col-8 text-start">
                                 <label for="peso_imc" class="form-label">Peso (kg)</label>
-                                <input type="text" class="form-control" id="peso_imc" name="peso_imc" required
+                                <input type="number" class="form-control" id="peso_imc" name="peso_imc" required
                                     placeholder="Ingresa tu peso (kg)"
                                     value="{{ datos_usuario.peso if datos_usuario else '' }}">
                             </div>
@@ -35,7 +35,7 @@
                         <div class="row mb-3">
                             <div class="col-8 text-start">
                                 <label for="altura_imc" class="form-label">Altura (cm)</label>
-                                <input type="text" class="form-control" id="altura_imc" name="altura_imc" required
+                                <input type="number" class="form-control" id="altura_imc" name="altura_imc" required
                                     placeholder="Ingresa tu altura (cm)"
                                     value="{{ datos_usuario.altura if datos_usuario else '' }}">
                             </div>
