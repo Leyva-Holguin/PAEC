@@ -3,19 +3,128 @@
 {% block titulo %}Inicio{% endblock %}
 
 {% block contenido %}
-
 <section class="container pt-4">
-    <div class="row mb-4 justify-content-center align-items-center">
-        <div class="col-12 col-md-8">
-            <div class="card text-bg-light mb-3">
-                <div class="card-header text-center card1 text-white">Proyecto PAEC</div>
-                <div class="card-body">
-                    <p>Bienvenidos a nuestro proyecto PAEC: vida saludable</p>
-                    <p>En esta pagina podras encontrar todo lo referente al proyecto PAEC de todos los módulos</p>
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header text-center nav2 text-white border-0">
+                    <h2 class="mb-0">
+                        <i class="bi bi-heart-pulse-fill me-2"></i>
+                        Proyecto PAEC: Vida Saludable
+                    </h2>
+                </div>
+                <div class="card-body" style="background-color: rgba(255,255,255,0.95);">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-md-7">
+                            <p class="lead">
+                                <strong>Fundamento:</strong> Comprender los cambios necesarios para llevar una vida saludable: 
+                                cambios en hábitos alimenticios, actividad física y descanso, así como el beneficio e impacto 
+                                en el desempeño académico de los alumnos.
+                            </p>
+                            <hr>
+                            <p>
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> 
+                                Calcula tu Índice de Masa Corporal (IMC)
+                            </p>
+                            <p>
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> 
+                                Recibe recomendaciones personalizadas de alimentación y ejercicio
+                            </p>
+                            <p>
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> 
+                                Explora contenido educativo de Química y Conciencia Histórica
+                            </p>
+                            <p>
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> 
+                                Visualiza tu historial y estadísticas de IMC
+                            </p>
+                        </div>
+                        <div class="col-12 col-md-5 text-center">
+                            <i class="bi bi-activity" style="font-size: 100px; color: #3A8C73;"></i>
+                            <i class="bi bi-heart-fill" style="font-size: 70px; color: #2E7D64; margin-left: -20px;"></i>
+                            <i class="bi bi-flask-fill" style="font-size: 60px; color: #260da0; margin-left: -15px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3 class="text-center mb-4" style="color: #260da0;">
+                Explora nuestros módulos
+            </h3>
+        </div>
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-lg hover-card">
+                <div class="card-header nav2 text-white text-center border-0">
+                    <i class="bi bi-calculator-fill fs-1"></i>
+                </div>
+                <div class="card-body text-center">
+                    <h3 class="card-title" style="color: #2E7D64;">Calculadora IMC</h3>
+                    <p class="card-text">Calcula tu Índice de Masa Corporal y recibe recomendaciones personalizadas según tu resultado.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 text-center pb-4">
+                    <a href="{{ url_for('imc_page') }}" class="btn btn-verde">
+                        <i class="bi bi-calculator-fill me-2"></i>Calcular IMC
+                        <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-lg hover-card">
+                <div class="card-header nav2 text-white text-center border-0 py-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-flask-fill" viewBox="0 0 16 16">
+                        <path d="M4.264 12.016a5 5 0 0 0 7.472 0l1.246-1.954a.5.5 0 0 0-.106-.662l-.768-.576a.5.5 0 0 0-.663.076L10.3 10.3a2 2 0 0 1-2.6 0L6.554 8.9a.5.5 0 0 0-.663-.076l-.768.576a.5.5 0 0 0-.106.662zm5.722-6.173L8.5 7.732V11.5a.5.5 0 0 1-1 0V7.732L6.014 5.843a.5.5 0 0 1 .124-.764L7.5 4.356V1.5h-1a.5.5 0 0 1 0-1h3a.5.5 0 0 1 0 1h-1v2.856l1.362.723a.5.5 0 0 1 .124.764z"/>
+                    </svg>
+                </div>
+                <div class="card-body text-center">
+                    <h3 class="card-title" style="color: #2E7D64;">Reacciones Químicas</h3>
+                    <p class="card-text">Descubre cómo los procesos químicos en tu cuerpo afectan tu salud, sueño y rendimiento académico.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 text-center pb-4">
+                    <a href="{{ url_for('quimica') }}" class="btn btn-verde">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-flask-fill me-2" viewBox="0 0 16 16">
+                            <path d="M4.264 12.016a5 5 0 0 0 7.472 0l1.246-1.954a.5.5 0 0 0-.106-.662l-.768-.576a.5.5 0 0 0-.663.076L10.3 10.3a2 2 0 0 1-2.6 0L6.554 8.9a.5.5 0 0 0-.663-.076l-.768.576a.5.5 0 0 0-.106.662zm5.722-6.173L8.5 7.732V11.5a.5.5 0 0 1-1 0V7.732L6.014 5.843a.5.5 0 0 1 .124-.764L7.5 4.356V1.5h-1a.5.5 0 0 1 0-1h3a.5.5 0 0 1 0 1h-1v2.856l1.362.723a.5.5 0 0 1 .124.764z"/>
+                        </svg>Explorar
+                        <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-lg hover-card">
+                <div class="card-header nav2 text-white text-center border-0">
+                    <i class="bi bi-book-fill fs-1"></i>
+                </div>
+                <div class="card-body text-center">
+                    <h3 class="card-title" style="color: #2E7D64;">Conciencia Histórica</h3>
+                    <p class="card-text">Conoce la historia del pozole, su origen prehispánico y sus beneficios nutricionales.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 text-center pb-4">
+                    <a href="{{ url_for('conciencia') }}" class="btn btn-verde">
+                        <i class="bi bi-book-fill me-2"></i>Leer Historia
+                        <i class="bi bi-arrow-right-short"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
+<style>
+    .hover-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15) !important;
+    }
+    .btn-verde, .btn-azul {
+        transition: all 0.2s ease;
+    }
+    .btn-verde:hover, .btn-azul:hover {
+        transform: scale(1.05);
+    }
+</style>
 {% endblock %}

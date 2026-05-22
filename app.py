@@ -19,7 +19,6 @@ db = SQLAlchemy(app)
 
 class RegistroIMC(db.Model):
     __tablename__ = 'registros_imc'
-    
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
     edad = db.Column(db.Integer)
@@ -51,7 +50,6 @@ def calcular_imc(peso, altura_cm):
     else:
         clasificacion = "Obesidad grado III"
         color = "danger"
-    
     return round(imc, 2), clasificacion, color
 
 @app.route('/')

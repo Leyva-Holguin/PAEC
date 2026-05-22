@@ -1,9 +1,25 @@
-body{
-    background-color: #CFE8D5;
+body {
+    background-image: url('/static/img/algo.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(207, 232, 213, 0.85);
+    z-index: -1;
 }
 
 .card1 {
-    background-color: #e56aae;
+    background-color: #2E7D64;
 }
 
 .nav1 {
@@ -11,20 +27,56 @@ body{
 }
 
 .nav2 {
-    background-color: #6B9B7A;
+    background-color: #3A8C73;
 }
 
-.active-link{
+.active-link {
     color: #d9ffe6 !important;
     font-weight: bold;
 }
 
-.imagen-historia{
+.imagen-historia {
     max-height: 320px;
     width: auto;
 }
 
-.card-body p{
+.card-body p {
     line-height: 1.8;
 }
 
+.btn-verde {
+    background-color: #3A8C73;
+    color: white;
+    border-radius: 50px;
+    padding: 10px 30px;
+    transition: transform 0.2s ease;
+}
+
+.btn-verde:hover {
+    background-color: #2E7D64;
+    color: white;
+    transform: scale(1.05);
+}
+
+.btn-azul {
+    background-color: #260da0;
+    color: white;
+    border-radius: 50px;
+    padding: 10px 30px;
+    transition: transform 0.2s ease;
+}
+
+.btn-azul:hover {
+    background-color: #1a0a6e;
+    color: white;
+    transform: scale(1.05);
+}
+
+.hover-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 30px rgba(0,0,0,0.15) !important;
+}
