@@ -130,8 +130,7 @@ def calcular_imc_route():
 
 @app.route('/historial')
 def historial():
-    registros = RegistroIMC.query.order_by(RegistroIMC.fecha_registro.desc()).all()
-    
+    registros = RegistroIMC.query.order_by(RegistroIMC.fecha_registro.asc()).all()
     total_registros = len(registros)
     
     if total_registros > 0:

@@ -75,34 +75,34 @@
                             </thead>
                             <tbody>
                                 <tr class="table-warning">
-                                    <td><i class="bi bi-arrow-down-circle-fill"></i> Bajo peso</td>
-                                    <td>Menor de 18.5</td>
-                                    <td><span class="badge bg-warning text-dark">Atención</span></td>
+                                    <td><i class="bi bi-arrow-down-circle-fill"></i> Bajo peso</th>
+                                    <td>Menor de 18.5</th>
+                                    <td><span class="badge bg-warning text-dark">Atención</span></th>
                                 </tr>
                                 <tr class="table-success">
-                                    <td><i class="bi bi-check-circle-fill"></i> Peso normal</td>
-                                    <td>18.5 – 24.9</td>
-                                    <td><span class="badge bg-success">Saludable</span></td>
+                                    <td><i class="bi bi-check-circle-fill"></i> Peso normal</th>
+                                    <td>18.5 – 24.9</th>
+                                    <td><span class="badge bg-success">Saludable</span></th>
                                 </tr>
                                 <tr class="table-warning">
-                                    <td><i class="bi bi-exclamation-triangle-fill"></i> Sobrepeso</td>
-                                    <td>25.0 – 29.9</td>
-                                    <td><span class="badge bg-warning text-dark">Precaución</span></td>
+                                    <td><i class="bi bi-exclamation-triangle-fill"></i> Sobrepeso</th>
+                                    <td>25.0 – 29.9</th>
+                                    <td><span class="badge bg-warning text-dark">Precaución</span></th>
                                 </tr>
                                 <tr class="table-danger">
-                                    <td><i class="bi bi-emoji-frown-fill"></i> Obesidad grado I</td>
-                                    <td>30.0 – 34.9</td>
-                                    <td><span class="badge bg-danger">Alerta</span></td>
+                                    <td><i class="bi bi-emoji-frown-fill"></i> Obesidad grado I</th>
+                                    <td>30.0 – 34.9</th>
+                                    <td><span class="badge bg-danger">Alerta</span></th>
                                 </tr>
                                 <tr class="table-danger">
-                                    <td><i class="bi bi-emoji-angry-fill"></i> Obesidad grado II</td>
-                                    <td>35.0 – 39.9</td>
-                                    <td><span class="badge bg-danger">Alerta</span></td>
+                                    <td><i class="bi bi-emoji-angry-fill"></i> Obesidad grado II</th>
+                                    <td>35.0 – 39.9</th>
+                                    <td><span class="badge bg-danger">Alerta</span></th>
                                 </tr>
                                 <tr class="table-danger">
-                                    <td><i class="bi bi-emoji-dizzy-fill"></i> Obesidad grado III</td>
-                                    <td>40.0 o más</td>
-                                    <td><span class="badge bg-danger">Riesgo alto</span></td>
+                                    <td><i class="bi bi-emoji-dizzy-fill"></i> Obesidad grado III</th>
+                                    <td>40.0 o más</th>
+                                    <td><span class="badge bg-danger">Riesgo alto</span></th>
                                 </tr>
                             </tbody>
                         </table>
@@ -120,6 +120,7 @@
             </div>
         </div>
     </div>
+    
     {% if resultado %}
     <div class="row mt-4">
         <div class="col-12">
@@ -176,6 +177,43 @@
                             </div>
                         </div>
                     </div>
+                    <div class="text-center mt-4 mb-4">
+                        <h5 class="mb-3">Tu composicion segun tu IMC:</h5>
+                        <div style="max-width: 100%; margin: 0 auto;">
+                            {% if resultado.clasificacion == "Bajo peso" %}
+                                <img src="{{ url_for('static', filename='img/imc (7).png') }}" 
+                                     class="img-fluid rounded shadow" 
+                                     alt="Bajo peso"
+                                     style="max-width: 100%; height: auto;">
+                            {% elif resultado.clasificacion == "Peso normal" %}
+                                <img src="{{ url_for('static', filename='img/imc (1).png') }}" 
+                                     class="img-fluid rounded shadow" 
+                                     alt="Peso normal"
+                                     style="max-width: 100%; height: auto;">
+                            {% elif resultado.clasificacion == "Sobrepeso" %}
+                                <img src="{{ url_for('static', filename='img/imc (2).png') }}" 
+                                     class="img-fluid rounded shadow" 
+                                     alt="Sobrepeso"
+                                     style="max-width: 100%; height: auto;">
+                            {% elif resultado.clasificacion == "Obesidad grado I" %}
+                                <img src="{{ url_for('static', filename='img/imc (4).png') }}" 
+                                     class="img-fluid rounded shadow" 
+                                     alt="Obesidad grado I"
+                                     style="max-width: 100%; height: auto;">
+                            {% elif resultado.clasificacion == "Obesidad grado II" %}
+                                <img src="{{ url_for('static', filename='img/imc (4).png') }}" 
+                                     class="img-fluid rounded shadow" 
+                                     alt="Obesidad grado II"
+                                     style="max-width: 100%; height: auto;">
+                            {% elif resultado.clasificacion == "Obesidad grado III" %}
+                                <img src="{{ url_for('static', filename='img/imc (5).png') }}" 
+                                     class="img-fluid rounded shadow" 
+                                     alt="Obesidad grado III"
+                                     style="max-width: 100%; height: auto;">
+                            {% endif %}
+                        </div>
+                    </div>
+                    
                     {% if resultado.es_menor %}
                     <div class="alert alert-warning">
                         <i class="bi bi-exclamation-triangle-fill me-2"></i>
@@ -186,6 +224,7 @@
                         </a> para una interpretación más adecuada.</p>
                     </div>
                     {% endif %}
+                    
                     <div class="text-center mt-4 mb-4 p-3 rounded" style="background-color: rgba(0,0,0,0.03);">
                         {% if resultado.clasificacion == "Bajo peso" %}
                             <i class="bi bi-emoji-neutral-fill" style="font-size: 80px; color: #ffc107;"></i>
