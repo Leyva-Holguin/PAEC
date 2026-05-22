@@ -26,6 +26,10 @@ body::before {
     background-color: #EFEAD8;
 }
 
+.card3 {
+    background-color: #f5f2e7;
+}
+
 .nav1 {
     background-color: #86B049;
 }
@@ -39,7 +43,7 @@ body::before {
 }
 
 .table thead th{
-    background-color: #A3B18A !important;s
+    background-color: #c0d1a4 !important;s
     color: white !important;
 }
 
