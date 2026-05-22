@@ -14,7 +14,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(207, 232, 213, 0.85);
+    background-color: #cfe8d5d9;
     z-index: -1;
 }
 
@@ -22,12 +22,25 @@ body::before {
     background-color: #2E7D64;
 }
 
+.card2 {
+    background-color: #EFEAD8;
+}
+
 .nav1 {
-    background-color: #260da0;
+    background-color: #86B049;
 }
 
 .nav2 {
-    background-color: #3A8C73;
+    background-color: #8F9779;
+}
+
+.tab {
+    background-color: #85994c;
+}
+
+.table thead th{
+    background-color: #A3B18A !important;s
+    color: white !important;
 }
 
 .active-link {
@@ -78,5 +91,5 @@ body::before {
 
 .hover-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 30px rgba(0,0,0,0.15) !important;
+    box-shadow: 0 20px 30px #00000026 !important;
 }
