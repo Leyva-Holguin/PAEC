@@ -1,5 +1,5 @@
 body{
-    background-color: #dbddff;
+    background-color: #CFE8D5;
 }
 
 .card1 {
@@ -11,5 +11,20 @@ body{
 }
 
 .nav2 {
-    background-color: #220d8d;
+    background-color: #6B9B7A;
 }
+
+.active-link{
+    color: #d9ffe6 !important;
+    font-weight: bold;
+}
+
+.imagen-historia{
+    max-height: 320px;
+    width: auto;
+}
+
+.card-body p{
+    line-height: 1.8;
+}
+
