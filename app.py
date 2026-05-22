@@ -31,19 +31,28 @@ class RegistroIMC(db.Model):
 
 def calcular_imc(peso, altura_cm):
     altura_m = altura_cm / 100
-    imc = peso / (altura_m ** 2)    
+    imc = peso / (altura_m ** 2)
+    
     if imc < 18.5:
-        return round(imc, 2), "Bajo peso"
+        clasificacion = "Bajo peso"
+        color = "warning"
     elif imc < 25:
-        return round(imc, 2), "Peso normal"
+        clasificacion = "Peso normal"
+        color = "success"
     elif imc < 30:
-        return round(imc, 2), "Sobrepeso"
+        clasificacion = "Sobrepeso"
+        color = "warning"
     elif imc < 35:
-        return round(imc, 2), "Obesidad grado I"
+        clasificacion = "Obesidad grado I"
+        color = "danger"
     elif imc < 40:
-        return round(imc, 2), "Obesidad grado II"
+        clasificacion = "Obesidad grado II"
+        color = "danger"
     else:
-        return round(imc, 2), "Obesidad grado III"
+        clasificacion = "Obesidad grado III"
+        color = "danger"
+    
+    return round(imc, 2), clasificacion, color
 
 @app.route('/')
 def index():
@@ -59,17 +68,34 @@ def conciencia():
 
 @app.route('/imc')
 def imc_page():
-    return render_template('imc.html', datos_usuario=None, resultado_imc=None)
+    return render_template('imc.html', resultado=None)
 
-@app.route('/cal_imc', methods=['POST'])
-def cal_imc():
+@app.route('/calcular_imc', methods=['POST'])
+def calcular_imc_route():
     try:
-        nombre = request.form.get('nombre', 'Usuario')
-        edad = request.form.get('edad', type=int)
-        peso = float(request.form.get('peso_imc'))
-        altura_cm = float(request.form.get('altura_imc'))
+        nombre = request.form.get('nombre', 'Usuario').strip()
+        if not nombre:
+            nombre = "Usuario"
+            
+        edad_str = request.form.get('edad')
+        edad = int(edad_str) if edad_str and edad_str.strip() else None
         
-        imc, clasificacion = calcular_imc(peso, altura_cm)
+        peso = float(request.form.get('peso'))
+        altura_cm = float(request.form.get('altura'))
+        
+        if peso <= 0 or peso > 500:
+            flash('El peso debe ser entre 1 y 500 kg', 'danger')
+            return redirect(url_for('imc_page'))
+        
+        if altura_cm <= 0 or altura_cm > 300:
+            flash('La altura debe ser entre 1 y 300 cm', 'danger')
+            return redirect(url_for('imc_page'))
+        
+        if edad and (edad < 1 or edad > 120):
+            flash('La edad debe ser entre 1 y 120 años', 'danger')
+            return redirect(url_for('imc_page'))
+        
+        imc, clasificacion, color = calcular_imc(peso, altura_cm)
         
         nuevo_registro = RegistroIMC(
             nombre=nombre,
@@ -83,12 +109,26 @@ def cal_imc():
         db.session.add(nuevo_registro)
         db.session.commit()
         
-        flash(f'{nombre}, tu IMC es: {imc} - {clasificacion}', 'success')
+        resultado = {
+            'nombre': nombre,
+            'edad': edad,
+            'peso': peso,
+            'altura': altura_cm,
+            'imc': imc,
+            'clasificacion': clasificacion,
+            'color': color,
+            'es_menor': edad is not None and edad < 18
+        }
         
+        flash(f'¡Cálculo completado! Tu IMC es {imc}', 'success')
+        return render_template('imc.html', resultado=resultado)
+        
+    except ValueError:
+        flash('Por favor ingresa valores numéricos válidos', 'danger')
+        return redirect(url_for('imc_page'))
     except Exception as e:
         flash(f'Error: {str(e)}', 'danger')
-    
-    return redirect(url_for('imc_page'))
+        return redirect(url_for('imc_page'))
 
 @app.route('/historial')
 def historial():
@@ -135,13 +175,12 @@ def eliminar(id):
     registro = RegistroIMC.query.get_or_404(id)
     db.session.delete(registro)
     db.session.commit()
-    flash('Registro eliminado', 'success')
+    flash('Registro eliminado correctamente', 'success')
     return redirect(url_for('historial'))
 
 with app.app_context():
     db.create_all()
-    print("Conectado a FreeSQLDatabase")
+    print("✓ Conectado a FreeSQLDatabase")
 
 if __name__ == '__main__':
-    print("Servidor en http://localhost:5000")
     app.run(debug=True)

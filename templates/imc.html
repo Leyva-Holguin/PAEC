@@ -5,6 +5,20 @@
 {% block contenido %}
 
 <section class="container pt-4">
+    <!-- Card principal similar al de historial -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Calculadora de Índice de Masa Corporal (IMC)</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">El IMC sirve para identificar si tu peso está dentro de un rango saludable según tu altura.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row mb-4 align-items-center">
         <div class="col-12 col-md-6">
             <div class="card text-bg-light mb-3">
@@ -13,49 +27,326 @@
                     <h5 class="card-title">¿Qué es el Índice de Masa Corporal?</h5>
                     <p>El IMC sirve para identificar si tu peso está dentro de un rango saludable según tu altura.</p>
                     <p>Prueba ingresando tus datos para obtener tu IMC (Ingresa el número solo)</p>
-                    <form method="POST" action="{{ url_for('cal_imc') }}">
+                    
+                    <form method="POST" action="{{ url_for('calcular_imc_route') }}">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre completo</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre" value="{{ datos_usuario.nombre if datos_usuario else '' }}">
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
                         </div>
                         
                         <div class="mb-3">
                             <label for="edad" class="form-label">Edad</label>
-                            <input type="number" class="form-control" id="edad" name="edad" placeholder="Ingresa tu edad" value="{{ datos_usuario.edad if datos_usuario else '' }}">
+                            <input type="number" class="form-control" id="edad" name="edad" placeholder="Ingresa tu edad" min="1" max="120">
+                            <small class="text-muted">Opcional - obligatorio si eres menor de edad</small>
                         </div> 
                         
                         <div class="row mb-3">
                             <div class="col-8 text-start">
-                                <label for="peso_imc" class="form-label">Peso (kg)</label>
-                                <input type="number" class="form-control" id="peso_imc" name="peso_imc" required
-                                    placeholder="Ingresa tu peso (kg)"
-                                    value="{{ datos_usuario.peso if datos_usuario else '' }}">
+                                <label for="peso" class="form-label">Peso (kg)</label>
+                                <input type="number" step="0.1" class="form-control" id="peso" name="peso" required placeholder="Ingresa tu peso (kg)" min="1" max="500">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-8 text-start">
-                                <label for="altura_imc" class="form-label">Altura (cm)</label>
-                                <input type="number" class="form-control" id="altura_imc" name="altura_imc" required
-                                    placeholder="Ingresa tu altura (cm)"
-                                    value="{{ datos_usuario.altura if datos_usuario else '' }}">
+                                <label for="altura" class="form-label">Altura (cm)</label>
+                                <input type="number" step="0.1" class="form-control" id="altura" name="altura" required placeholder="Ingresa tu altura (cm)" min="1" max="300">
                             </div>
                         </div>
                         <button type="submit" class="btn btn-warning">Calcular IMC</button>
                     </form>
-                    
-                    {% if resultado_imc %}
-                    <div class="alert alert-success mt-3">
-                        {{ resultado_imc|safe }}
-                    </div>
-                    {% endif %}
                 </div>
             </div>
         </div>
+        
         <div class="col-12 col-md-6">
-            <img src="{{ url_for('static', filename='img/imc.jpeg') }}" class="img-fluid rounded-4"
-                alt="Imagen que muestra si tu IMC se encuentra en un rango saludable.">
+            <!-- Tabla de clasificación estilo historial -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Clasificación del IMC</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered mb-0">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Clasificación</th>
+                                    <th>IMC</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-warning">
+                                    <td>Bajo peso</td>
+                                    <td>Menor de 18.5</td>
+                                    <td><span class="badge bg-warning text-dark">Atención</span></td>
+                                </tr>
+                                <tr class="table-success">
+                                    <td>Peso normal o saludable</td>
+                                    <td>18.5 – 24.9</td>
+                                    <td><span class="badge bg-success">Saludable</span></td>
+                                </tr>
+                                <tr class="table-warning">
+                                    <td>Sobrepeso</td>
+                                    <td>25.0 – 29.9</td>
+                                    <td><span class="badge bg-warning text-dark">Precaución</span></td>
+                                </tr>
+                                <tr class="table-danger">
+                                    <td>Obesidad grado I</td>
+                                    <td>30.0 – 34.9</td>
+                                    <td><span class="badge bg-danger">Alerta</span></td>
+                                </tr>
+                                <tr class="table-danger">
+                                    <td>Obesidad grado II</td>
+                                    <td>35.0 – 39.9</td>
+                                    <td><span class="badge bg-danger">Alerta</span></td>
+                                </tr>
+                                <tr class="table-danger">
+                                    <td>Obesidad grado III (obesidad mórbida)</td>
+                                    <td>40.0 o más</td>
+                                    <td><span class="badge bg-danger">Riesgo alto</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Nota aclaratoria -->
+            <div class="card mt-3">
+                <div class="card-body bg-light">
+                    <small class="text-muted">
+                        <strong>NOTA:</strong> El resultado de IMC no siempre refleja la composición corporal individual 
+                        (por ejemplo, en atletas con mucha masa muscular puede dar un valor IMC alto sin que exista exceso de grasa).
+                    </small>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Resultados del cálculo - estilo similar a estadísticas de historial -->
+    {% if resultado %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Resultado del cálculo</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Tarjetas de resultado estilo historial -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card text-center border-{{ resultado.color }}">
+                                <div class="card-body">
+                                    <h5 class="text-{{ resultado.color }}">IMC Calculado</h5>
+                                    <h2 class="display-4">{{ resultado.imc }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center border-{{ resultado.color }}">
+                                <div class="card-body">
+                                    <h5 class="text-{{ resultado.color }}">Clasificación</h5>
+                                    <h4>
+                                        {% if resultado.clasificacion == 'Bajo peso' %}
+                                            <span class="badge bg-warning text-dark">Bajo peso</span>
+                                        {% elif resultado.clasificacion == 'Peso normal' %}
+                                            <span class="badge bg-success">Peso normal</span>
+                                        {% elif resultado.clasificacion == 'Sobrepeso' %}
+                                            <span class="badge bg-warning text-dark">Sobrepeso</span>
+                                        {% elif resultado.clasificacion == 'Obesidad grado I' %}
+                                            <span class="badge bg-danger">Obesidad grado I</span>
+                                        {% elif resultado.clasificacion == 'Obesidad grado II' %}
+                                            <span class="badge bg-danger">Obesidad grado II</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Obesidad grado III</span>
+                                        {% endif %}
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center border-info">
+                                <div class="card-body">
+                                    <h5 class="text-info">Peso</h5>
+                                    <h2 class="display-4">{{ resultado.peso }} kg</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center border-info">
+                                <div class="card-body">
+                                    <h5 class="text-info">Altura</h5>
+                                    <h2 class="display-4">{{ resultado.altura }} cm</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Nota para menores de edad -->
+                    {% if resultado.es_menor %}
+                    <div class="alert alert-warning">
+                        <strong>⚠️ NOTA PARA MENORES DE EDAD:</strong>
+                        <p class="mb-0 mt-2">El IMC se interpreta diferente en niños y adolescentes. 
+                        <a href="https://www.who.int/tools/growth-reference-data-for-5to19-years" target="_blank" class="alert-link">
+                            Consulta aquí la tabla de percentiles de crecimiento
+                        </a> para una interpretación más adecuada.</p>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Figura representativa del nivel -->
+                    <div class="text-center mt-4 mb-4">
+                        <h5>Figura representativa de tu nivel de IMC:</h5>
+                        {% if resultado.clasificacion == "Bajo peso" %}
+                            <i class="bi bi-emoji-neutral-fill" style="font-size: 80px; color: #ffc107;"></i>
+                            <p class="mt-2">⚠️ Bajo peso - Requiere aumentar masa corporal</p>
+                        {% elif resultado.clasificacion == "Peso normal" %}
+                            <i class="bi bi-emoji-smile-fill" style="font-size: 80px; color: #28a745;"></i>
+                            <p class="mt-2">✅ Peso normal - ¡Excelente! Mantén tus hábitos</p>
+                        {% elif resultado.clasificacion == "Sobrepeso" %}
+                            <i class="bi bi-emoji-frown-fill" style="font-size: 80px; color: #ffc107;"></i>
+                            <p class="mt-2">⚖️ Sobrepeso - Pequeños cambios, grandes resultados</p>
+                        {% elif resultado.clasificacion == "Obesidad grado I" %}
+                            <i class="bi bi-emoji-frown-fill" style="font-size: 80px; color: #dc3545;"></i>
+                            <p class="mt-2">🔴 Obesidad grado I - Es momento de tomar acción</p>
+                        {% elif resultado.clasificacion == "Obesidad grado II" %}
+                            <i class="bi bi-emoji-angry-fill" style="font-size: 80px; color: #dc3545;"></i>
+                            <p class="mt-2">🔴 Obesidad grado II - Requiere atención médica</p>
+                        {% else %}
+                            <i class="bi bi-emoji-dizzy-fill" style="font-size: 80px; color: #721c24;"></i>
+                            <p class="mt-2">🚨 Obesidad grado III - Prioridad: consulta médica urgente</p>
+                        {% endif %}
+                    </div>
+                    
+                    <hr>
+                    
+                    <!-- Recomendaciones estilo historial -->
+                    <h5 class="mt-3">Recomendaciones personalizadas:</h5>
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <div class="card border-success mb-3">
+                                <div class="card-header bg-success text-white">
+                                    <strong>🍎 Alimentación</strong>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0">
+                                        {% if resultado.clasificacion == "Bajo peso" %}
+                                            <li>Aumenta calorías saludables (frutos secos, aguacate)</li>
+                                            <li>Consume proteínas magras (pollo, pescado, huevos)</li>
+                                            <li>Realiza 5-6 comidas pequeñas al día</li>
+                                            <li>Incluye carbohidratos complejos</li>
+                                            <li>Bebe batidos nutritivos</li>
+                                        {% elif resultado.clasificacion == "Peso normal" %}
+                                            <li>Mantén dieta balanceada</li>
+                                            <li>5 porciones de frutas y verduras al día</li>
+                                            <li>2-3 litros de agua diariamente</li>
+                                            <li>Limita azúcares refinados</li>
+                                            <li>Incluye fibra en cada comida</li>
+                                        {% elif resultado.clasificacion == "Sobrepeso" %}
+                                            <li>Reduce porciones gradualmente</li>
+                                            <li>Reemplaza refrescos por agua</li>
+                                            <li>Aumenta consumo de verduras</li>
+                                            <li>Cocina al vapor, evita frituras</li>
+                                            <li>Lleva registro de alimentos</li>
+                                        {% elif resultado.clasificacion == "Obesidad grado I" %}
+                                            <li>Consulta con nutriólogo</li>
+                                            <li>Reduce azúcares y harinas refinadas</li>
+                                            <li>Come más fibra (verduras, legumbres)</li>
+                                            <li>Planifica comidas semanalmente</li>
+                                            <li>Bebe agua antes de cada comida</li>
+                                        {% else %}
+                                            <li><strong>URGENTE:</strong> Consulta médica</li>
+                                            <li>Requieres plan supervisado</li>
+                                            <li>Elimina bebidas azucaradas</li>
+                                            <li>Prioriza vegetales y proteínas magras</li>
+                                            <li>Considera apoyo psicológico</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="card border-info mb-3">
+                                <div class="card-header bg-info text-white">
+                                    <strong>🏃 Ejercicio</strong>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0">
+                                        {% if resultado.clasificacion == "Bajo peso" %}
+                                            <li>Entrenamiento de fuerza para ganar músculo</li>
+                                            <li>Pesas 3-4 veces por semana</li>
+                                            <li>Reduce cardio excesivo</li>
+                                            <li>Consulta a entrenador</li>
+                                        {% elif resultado.clasificacion == "Peso normal" %}
+                                            <li>150-300 minutos actividad moderada/semana</li>
+                                            <li>Combina cardio con fuerza</li>
+                                            <li>Mantente activo (escaleras, caminar)</li>
+                                            <li>Estiramientos 2 veces/semana</li>
+                                        {% elif resultado.clasificacion == "Sobrepeso" %}
+                                            <li>Caminatas 30 minutos diarios</li>
+                                            <li>Incrementa intensidad gradualmente</li>
+                                            <li>Combina ejercicio aeróbico con fuerza</li>
+                                            <li>Busca actividades que disfrutes</li>
+                                        {% elif resultado.clasificacion == "Obesidad grado I" %}
+                                            <li>Ejercicio de bajo impacto (natación)</li>
+                                            <li>30-45 minutos, 5 días/semana</li>
+                                            <li>Busca acompañante</li>
+                                            <li>Considera asesoría profesional</li>
+                                        {% else %}
+                                            <li>Ejercicio acuático (bajo impacto)</li>
+                                            <li>Sesiones cortas de 10-15 minutos</li>
+                                            <li>Requiere supervisión médica</li>
+                                            <li>Incrementa intensidad gradualmente</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="card border-warning mb-3">
+                                <div class="card-header bg-warning text-dark">
+                                    <strong>💚 Beneficios</strong>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0">
+                                        {% if resultado.clasificacion == "Bajo peso" %}
+                                            <li>Aumentarás masa muscular y densidad ósea</li>
+                                            <li>Mejorará tu sistema inmunológico</li>
+                                            <li>Tendrás más energía durante el día</li>
+                                            <li>Mejor rendimiento académico</li>
+                                        {% elif resultado.clasificacion == "Peso normal" %}
+                                            <li>Mantendrás peso saludable a largo plazo</li>
+                                            <li>Reducirás riesgo de enfermedades crónicas</li>
+                                            <li>Mejorará tu concentración y memoria</li>
+                                            <li>Dormirás mejor</li>
+                                        {% elif resultado.clasificacion == "Sobrepeso" %}
+                                            <li>Perderás grasa corporal gradualmente</li>
+                                            <li>Disminuirás presión arterial</li>
+                                            <li>Mejorará tu autoestima</li>
+                                            <li>Mejor rendimiento físico escolar</li>
+                                        {% elif resultado.clasificacion == "Obesidad grado I" %}
+                                            <li>Mejorará salud cardiovascular</li>
+                                            <li>Reducirás dolor articular y fatiga</li>
+                                            <li>Disminuirá riesgo de diabetes</li>
+                                            <li>Mejorará calidad de sueño</li>
+                                        {% else %}
+                                            <li>Reducirás riesgo de enfermedades graves</li>
+                                            <li>Mejorará tu movilidad y calidad de vida</li>
+                                            <li>Disminuirás problemas respiratorios</li>
+                                            <li>Aumentarás esperanza de vida</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </section>
 
 {% endblock %}
