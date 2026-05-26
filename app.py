@@ -1,18 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import os
 
 app = Flask(__name__)
-app.secret_key = 'tu_clave_secreta_123'
+app.secret_key = 'El_tipo_que_se_rie_mientras_come_un_flan'
 
-DATOS_FREESQL = {
-    'host': 'sql3.freesqldatabase.com',
-    'user': 'sql3827338',
-    'password': 'kbTclCqvJj',
-    'database': 'sql3827338'
-}
-
-app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{DATOS_FREESQL['user']}:{DATOS_FREESQL['password']}@{DATOS_FREESQL['host']}/{DATOS_FREESQL['database']}"
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'imc.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -159,13 +154,7 @@ def historial():
         peso_maximo = 0
         distribucion = []
     
-    return render_template('historial.html',
-                         registros=registros,
-                         total_registros=total_registros,
-                         imc_promedio=imc_promedio,
-                         peso_minimo=peso_minimo,
-                         peso_maximo=peso_maximo,
-                         distribucion=distribucion)
+    return render_template('historial.html',registros=registros,total_registros=total_registros,imc_promedio=imc_promedio,peso_minimo=peso_minimo,peso_maximo=peso_maximo,distribucion=distribucion)
 
 @app.route('/eliminar/<int:id>')
 def eliminar(id):
@@ -177,7 +166,7 @@ def eliminar(id):
 
 with app.app_context():
     db.create_all()
-    print("✓ Conectado a FreeSQLDatabase")
+    print("✓ Base de datos SQLite creada/verificada: imc.db")
 
 if __name__ == '__main__':
     app.run(debug=True)
