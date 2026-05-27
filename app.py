@@ -59,6 +59,10 @@ def quimica():
 def conciencia():
     return render_template('conciencia.html')
 
+@app.route('/matematicas')
+def matematicas():
+    return render_template('matematicas.html')
+
 @app.route('/imc')
 def imc_page():
     return render_template('imc.html', resultado=None)
