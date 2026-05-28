@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-
 {% block titulo %}Inicio{% endblock %}
-
 {% block contenido %}
 <section class="container pt-4">
     <div class="row mb-5">
@@ -74,6 +72,23 @@
         </div>
         <div class="col-12 col-md-4 mb-4">
             <div class="card h-100 border-0 shadow-lg hover-card">
+                <div class="card-header nav2 text-white text-center border-0">
+                    <i class="bi bi-clock-history fs-1"></i>
+                </div>
+                <div class="card-body text-center">
+                    <h3 class="card-title" style="color: #2E7D64;">Historial IMC</h3>
+                    <p class="card-text">Consulta tu historial de cálculos, visualiza estadísticas y da seguimiento a tu progreso.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 text-center pb-4">
+                    <a href="{{ url_for('historial') }}" class="btn btn-verde">
+                        <i class="bi bi-clock-history me-2"></i>Ver Historial
+                        <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-lg hover-card">
                 <div class="card-header nav2 text-white text-center border-0 py-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-flask-fill" viewBox="0 0 16 16">
                         <path d="M4.264 12.016a5 5 0 0 0 7.472 0l1.246-1.954a.5.5 0 0 0-.106-.662l-.768-.576a.5.5 0 0 0-.663.076L10.3 10.3a2 2 0 0 1-2.6 0L6.554 8.9a.5.5 0 0 0-.663-.076l-.768.576a.5.5 0 0 0-.106.662zm5.722-6.173L8.5 7.732V11.5a.5.5 0 0 1-1 0V7.732L6.014 5.843a.5.5 0 0 1 .124-.764L7.5 4.356V1.5h-1a.5.5 0 0 1 0-1h3a.5.5 0 0 1 0 1h-1v2.856l1.362.723a.5.5 0 0 1 .124.764z"/>
@@ -93,7 +108,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-4 mb-4">
+    </div>
+    <div class="row mt-4">
+        <div class="col-12 col-md-6 mb-4">
             <div class="card h-100 border-0 shadow-lg hover-card">
                 <div class="card-header nav2 text-white text-center border-0">
                     <i class="bi bi-book-fill fs-1"></i>
@@ -110,21 +127,23 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 col-md-6 mb-4">
+            <div class="card h-100 border-0 shadow-lg hover-card">
+                <div class="card-header nav2 text-white text-center border-0">
+                    <i class="bi bi-graph-up fs-1"></i>
+                </div>
+                <div class="card-body text-center">
+                    <h3 class="card-title" style="color: #2E7D64;">Mi Ritmo, Mi Salud</h3>
+                    <p class="card-text">Explora la relación entre las matemáticas, los fractales, la variabilidad cardíaca y los hábitos saludables.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 text-center pb-4">
+                    <a href="{{ url_for('matematicas') }}" class="btn btn-verde">
+                        <i class="bi bi-graph-up me-2"></i>Explorar
+                        <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
-<style>
-    .hover-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .hover-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 30px #00000026 !important;
-    }
-    .btn-verde, .btn-azul {
-        transition: all 0.2s ease;
-    }
-    .btn-verde:hover, .btn-azul:hover {
-        transform: scale(1.05);
-    }
-</style>
 {% endblock %}

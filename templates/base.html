@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,6 +34,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.endpoint == 'matematicas' %}active-link{% endif %}" href="{{ url_for('matematicas') }}">Matematicas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'ritmo_cardiaco' %}active-link{% endif %}" href="{{ url_for('ritmo_cardiaco') }}">Ritmo Cardíaco</a>
                     </li>
                 </ul>
             </div>

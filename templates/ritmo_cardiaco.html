@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block titulo %}Ritmo Cardíaco - Sueño y FC{% endblock %}
+{% block contenido %}
+<section class="container pt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card card3 border-0 shadow">
+                <div class="card-header nav2 text-white text-center">
+                    <h3 class="mb-0">
+                        <i class="bi bi-heart-pulse-fill me-2"></i>
+                        Mi Ritmo Cardíaco
+                    </h3>
+                </div>
+                <div class="card-body text-center">
+                    <p class="lead mb-0">
+                        Registra tus horas de sueño y frecuencia cardíaca para visualizar la relación entre ambos.
+                        <br>
+                        <small class="text-muted">Esperamos una correlación negativa: a más sueño, menor frecuencia cardíaca.</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card card2 shadow">
+                <div class="card-header nav2 text-white">
+                    <i class="bi bi-moon-stars-fill me-2"></i>
+                    Registrar datos
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('guardar_sueno') }}">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" name="nombre" class="form-control" placeholder="Tu nombre" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Horas de sueño</label>
+                                <input type="number" step="0.5" name="horas_sueno" class="form-control" placeholder="Ej: 7.5" min="0" max="24" required>
+                                <small class="text-muted">¿Cuántas horas dormiste?</small>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Frecuencia cardíaca en reposo (lpm)</label>
+                                <input type="number" name="fc_reposo" class="form-control" placeholder="Ej: 65" min="30" max="200" required>
+                                <small class="text-muted">Mide tus pulsaciones en reposo (sentado, relajado)</small>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-verde">
+                                <i class="bi bi-save me-2"></i>Guardar registro
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card card2 shadow">
+                <div class="card-header nav2 text-white">
+                    <i class="bi bi-bar-chart-steps me-2"></i>
+                    Gráfica: Sueño vs Frecuencia Cardíaca
+                </div>
+                <div class="card-body text-center">
+                    {% if grafica %}
+                        <img src="data:image/png;base64,{{ grafica }}" 
+                             class="img-fluid rounded shadow" 
+                             alt="Gráfica de correlación">
+                        <p class="text-muted mt-3">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Cada punto representa un registro.
+                        </p>
+                    {% else %}
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle me-2"></i>
+                            No hay suficientes registros para mostrar la gráfica. ¡Agrega al menos 2 registros!
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card2 shadow">
+                <div class="card-header nav2 text-white">
+                    <i class="bi bi-table me-2"></i>
+                    Historial de registros
+                </div>
+                <div class="card-body">
+                    {% if registros %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>Horas sueño</th>
+                                    <th>FC reposo</th>
+                                    <th>Fecha</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for r in registros %}
+                                <tr>
+                                    <td>{{ loop.index }}</strong>
+                                    <td>{{ r.nombre }}</strong>
+                                    <td>
+                                        <span class="badge bg-primary">{{ r.horas_sueno }} h</span>
+                                    </strong>
+                                    <td>
+                                        <span class="badge bg-danger">{{ r.fc_reposo }} lpm</span>
+                                    </strong>
+                                    <td>{{ r.fecha_registro.strftime('%d/%m/%Y %H:%M') }}</strong>
+                                    <td>
+                                        <a href="{{ url_for('eliminar_sueno', id=r.id) }}" 
+                                           class="btn btn-sm btn-danger"
+                                           onclick="return confirm('¿Eliminar este registro?')">
+                                            <i class="bi bi-trash"></i> Eliminar
+                                        </a>
+                                    </strong>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info text-center">
+                        <i class="bi bi-inbox me-2"></i>
+                        No hay registros aún. ¡Agrega tu primer registro!
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
