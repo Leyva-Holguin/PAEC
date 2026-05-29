@@ -43,12 +43,20 @@ body::before {
 }
 
 .table thead th{
-    background-color: #c0d1a4 !important;s
+    background-color: #c0d1a4 !important;
     color: white !important;
 }
 
+.nav-link {
+    color: #58584cb3 !important;
+}
+
+.nav-link:hover {
+    color: #ffe69d !important;
+}
+
 .active-link {
-    color: #d9ffe6 !important;
+    color: #ffe084 !important;
     font-weight: bold;
 }
 

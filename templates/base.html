@@ -18,13 +18,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'index' %}active-link{% endif %}"" href="{{ url_for('index') }}">Inicio</a>
+                        <a class="nav-link {% if request.endpoint == 'index' %}active-link{% endif %}" href="{{ url_for('index') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'imc_page' %}active-link{% endif %}"" href="{{ url_for('imc_page') }}">Calculadora IMC</a>
+                        <a class="nav-link {% if request.endpoint in ['imc_page', 'calcular_imc_route'] %}active-link{% endif %}" href="{{ url_for('imc_page') }}">Calculadora IMC</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'historial' %}active-link{% endif %}"" href="{{ url_for('historial') }}">Historial</a>
+                        <a class="nav-link {% if request.endpoint == 'historial' %}active-link{% endif %}" href="{{ url_for('historial') }}">Estadisticas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.endpoint == 'quimica' %}active-link{% endif %}" href="{{ url_for('quimica') }}">Reacciones Quimicas</a>
