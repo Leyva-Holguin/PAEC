@@ -189,6 +189,7 @@ def guardar_sueno():
         )
         db.session.add(nuevo_registro)
         db.session.commit()
+        flash(f'¡Registro guardado!', 'success')
         return redirect(url_for('ritmo_cardiaco'))
         
     except ValueError:
