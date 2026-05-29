@@ -47,6 +47,10 @@ body::before {
     color: white !important;
 }
 
+.alert {
+    background-color: #f5f2e7 !important;
+}
+
 .nav-link {
     color: #58584cb3 !important;
 }

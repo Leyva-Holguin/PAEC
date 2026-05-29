@@ -211,7 +211,7 @@ def grafica_sueno():
     fc = [r.fc_reposo for r in registros]
     plt.figure(figsize=(10, 6))
     plt.scatter(horas, fc, color='#86B049', s=120, alpha=0.7, edgecolors='white', linewidth=2)
-    plt.xlabel('Horas de sueño', fontsize=12)
+    plt.xlabel('Horas de sueño (hoy)', fontsize=12)
     plt.ylabel('Frecuencia cardíaca en reposo (lpm)', fontsize=12)
     plt.title('Relación entre horas de sueño y frecuencia cardíaca', fontsize=14, fontweight='bold')
     plt.grid(True, alpha=0.3)
