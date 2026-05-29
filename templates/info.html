@@ -1,6 +1,9 @@
 {% extends "base.html" %}
+
 {% block titulo %}Inicio{% endblock %}
+
 {% block contenido %}
+
 <section class="container pt-4">
     <div class="row mb-5">
         <div class="col-12">
@@ -30,11 +33,15 @@
                             </p>
                             <p>
                                 <i class="bi bi-check-circle-fill text-success me-2"></i> 
-                                Explora contenido educativo de Química y Conciencia Histórica
+                                Explora contenido educativo de Química, Conciencia Histórica y Matemáticas
                             </p>
                             <p>
                                 <i class="bi bi-check-circle-fill text-success me-2"></i> 
                                 Visualiza tu historial y estadísticas de IMC
+                            </p>
+                            <p>
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> 
+                                Registra tus horas de sueño y frecuencia cardíaca para ver su relación
                             </p>
                         </div>
                         <div class="col-12 col-md-5 text-center">
@@ -47,6 +54,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-12">
             <h3 class="text-center mb-4" style="color: #260da0;">
@@ -76,8 +84,8 @@
                     <i class="bi bi-clock-history fs-1"></i>
                 </div>
                 <div class="card-body text-center">
-                    <h3 class="card-title" style="color: #2E7D64;">Historial IMC</h3>
-                    <p class="card-text">Consulta tu historial de cálculos, visualiza estadísticas y da seguimiento a tu progreso.</p>
+                    <h3 class="card-title" style="color: #2E7D64;">Estadisticas IMC</h3>
+                    <p class="card-text">Visualiza estadísticas de la calculadora IMC.</p>
                 </div>
                 <div class="card-footer bg-transparent border-0 text-center pb-4">
                     <a href="{{ url_for('historial') }}" class="btn btn-verde">
@@ -87,6 +95,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-12 col-md-4 mb-4">
             <div class="card h-100 border-0 shadow-lg hover-card">
                 <div class="card-header nav2 text-white text-center border-0 py-3">
@@ -109,8 +118,11 @@
             </div>
         </div>
     </div>
+
+    <!-- Segunda fila de cards (ahora con 3 cards) -->
     <div class="row mt-4">
-        <div class="col-12 col-md-6 mb-4">
+        <!-- Card 4: Conciencia Histórica -->
+        <div class="col-12 col-md-4 mb-4">
             <div class="card h-100 border-0 shadow-lg hover-card">
                 <div class="card-header nav2 text-white text-center border-0">
                     <i class="bi bi-book-fill fs-1"></i>
@@ -127,13 +139,15 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6 mb-4">
+
+        <!-- Card 5: Matemáticas (contenido educativo) -->
+        <div class="col-12 col-md-4 mb-4">
             <div class="card h-100 border-0 shadow-lg hover-card">
                 <div class="card-header nav2 text-white text-center border-0">
                     <i class="bi bi-graph-up fs-1"></i>
                 </div>
                 <div class="card-body text-center">
-                    <h3 class="card-title" style="color: #2E7D64;">Mi Ritmo, Mi Salud</h3>
+                    <h3 class="card-title" style="color: #2E7D64;">Matemáticas</h3>
                     <p class="card-text">Explora la relación entre las matemáticas, los fractales, la variabilidad cardíaca y los hábitos saludables.</p>
                 </div>
                 <div class="card-footer bg-transparent border-0 text-center pb-4">
@@ -144,6 +158,26 @@
                 </div>
             </div>
         </div>
+
+        <!-- Card 6: Ritmo Cardíaco (NUEVA - interactiva) -->
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-lg hover-card">
+                <div class="card-header nav2 text-white text-center border-0">
+                    <i class="bi bi-heart-pulse-fill fs-1"></i>
+                </div>
+                <div class="card-body text-center">
+                    <h3 class="card-title" style="color: #2E7D64;">Ritmo Cardíaco</h3>
+                    <p class="card-text">Registra tus horas de sueño y frecuencia cardíaca. Visualiza la relación entre ambos en una gráfica interactiva.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 text-center pb-4">
+                    <a href="{{ url_for('ritmo_cardiaco') }}" class="btn btn-verde">
+                        <i class="bi bi-heart-pulse-fill me-2"></i>Registrar
+                        <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
+
 {% endblock %}
